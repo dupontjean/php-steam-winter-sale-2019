@@ -4,7 +4,7 @@ $arch = (Get-WmiObject win32_operatingsystem | select osarchitecture).osarchitec
 if($PSVersiontable.PSVersion.Major -lt 3)
 {
     Write-Warning "Please download php and place it in the same folder as this script."
-    Write-Output "Download from: https://windows.php.net/downloads/releases/php-7.3.5-nts-Win32-VC15-x$arch.zip"
+    Write-Output "Download from: https://windows.php.net/downloads/releases/php-7.4.1-nts-Win32-VC15-x$archh.zip"
     Write-Output ("Save to this directory: $workingdir `nand rename it to php.zip" -f (Get-Location).Path)
     Read-Host "Press Enter when you're done!"
 }
