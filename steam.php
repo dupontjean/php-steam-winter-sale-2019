@@ -607,13 +607,13 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 				if( curl_errno ( $d ) )
 				{
 					$failed = 1;
-					Msg( '{lightred}' . $id . ' failed - ' . curl_error($d) );
+					Msg( '{lightred}' . $URL[$id]['url'] . ' failed - ' . curl_error($d) );
 				}
 
 				if ( $responseCode >= 400 )
 				{
 					$failed = 1;
-					Msg( '{lightred}' . $id . ' failed - HTTP Error: ' . $responseCode );
+					Msg( '{lightred}' . $URL[$id]['url'] . ' failed - HTTP Error: ' . $responseCode );
 				}
 				
 				$retry--;
