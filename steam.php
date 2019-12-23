@@ -275,7 +275,7 @@ foreach( $bots as $json )
 		$cards = array();
 		$me_inventory = foo($steamid, 0);
 		
-		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Checking inventory...' );
+		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - Checking inventory...' );
 		
 		$trade_me = array();
 		
@@ -440,7 +440,7 @@ foreach( $bots as $json )
 		}
 		else
 		{
-			Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - nothing to trade' );
+			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - nothing to trade' );
 		}
 	}
 	
