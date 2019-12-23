@@ -2,7 +2,7 @@
 
 Sale vote (Steam Awards), discovery queue and auto trade
 
-For config files refer to:
+## For config files refer to:
 
 <code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config </code>
 
