@@ -3,7 +3,9 @@
 set_time_limit( 0 );
 
 include_once  __DIR__ . '/Crypt/RSA.php';
+
 $bots = glob( __DIR__ . '/config/*.json', GLOB_BRACE );
+usort(  $bots,   function($a,$b) {	return basename($a) <=> basename($b); } );
 
 $counter = 0;
 $bots_total = count( $bots );
