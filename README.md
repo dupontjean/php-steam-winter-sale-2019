@@ -1,4 +1,4 @@
-# STEAM WINTER SALE 2019
+# Steam Winter Sale 2019
 
 Sale vote (Steam Awards), discovery queue and auto trade
 
