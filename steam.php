@@ -340,7 +340,7 @@ foreach( $bots as $json )
 						
 						if( isset( $ret['tradeofferid'] ) )
 						{
-							$success2 = 1:
+							$success2 = 1;
 							
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
 						
