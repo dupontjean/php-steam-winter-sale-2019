@@ -481,7 +481,6 @@ function GetCurl( )
 		CURLOPT_TIMEOUT        => 30,
 		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_HEADER         => true,
-		// CURLOPT_COOKIESESSION  => true,
 		CURLOPT_FOLLOWLOCATION => true,
 		CURLOPT_AUTOREFERER    => true,
 		CURLOPT_SSL_VERIFYHOST => false,
@@ -606,7 +605,6 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 
 			curl_setopt( $curl[$id], CURLOPT_HTTPHEADER, $Header );
 			curl_setopt( $curl[$id], CURLOPT_ENCODING, '' );
-			// curl_setopt( $curl[$id], CURLOPT_COOKIESESSION, false );
 			curl_setopt( $curl[$id], CURLOPT_COOKIE, $d['cookies'] );
 			curl_setopt( $curl[$id], CURLOPT_COOKIEFILE, $d['cookies'] );
 			curl_setopt( $curl[$id], CURLOPT_COOKIEJAR, $d['cookies'] );
@@ -664,13 +662,6 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 				
 				$Header = substr( $Data[$id], 0, $HeaderSize );
 				$Data[$id] = substr( $Data[$id], $HeaderSize );
-								
-				// preg_match_all( '/^Set-Cookie:\s*([^;]*)/mi', $Header, $set );
-					
-				// foreach( $set[1] as $item )
-				// {
-					// $cookie .= $item . ';';
-				// }
 				
 				if( curl_errno ( $d ) )
 				{
@@ -736,31 +727,6 @@ function Msg( $Message, $EOL = PHP_EOL, $printf = [] )
 		echo $Message;
 	}
 }
-
-class BodyPost
-{
-	public static function PartPost( $name, $val )
-	{
-		$body = 'Content-Disposition: form-data; name="' . $name . '"';
-		$body .= "\r\n\r\n".$val."\r\n";
-		
-		return $body;
-	}
-
-	public static function Get( array $post, $delimiter='-------------0123456789' )
-	{
-		if( is_array( $post ) && !empty( $post ) )
-		{
-			foreach( $post as $val )
-				$ret = '';
-				foreach( $post as $name=>$val )
-				$ret .= '--' . $delimiter. "\r\n". self::PartPost( $name, $val );
-				$ret .= "--" . $delimiter . "--\r\n";
-		}
-		else throw new \Exception( 'Error input param!' );
-		return $ret;
-	}
-};
 
 function foo( $steamid, $last_assetid )
 {
