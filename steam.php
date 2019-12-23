@@ -198,48 +198,67 @@ foreach( $bots as $json )
 	{
 		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Successfully logged as ' . $steamid .  ( !empty( $vanityurl ) ? '/' . $vanityurl : '' ) . '.' );
 		
-		$request = ExecuteRequest( 'https://store.steampowered.com/steamawards', [], [], '', '', false );
+		$salevote = ExecuteRequest( 'https://store.steampowered.com/steamawards', [], [], '', '', false );
 		
-		$datas = array();
-		
-		$datas[0]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[0]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 34, 'appid' => 814380, 'developerid' => 0 );
-		$datas[0]['cookies'] = $cookie;
+		if( preg_match( '/award_card_btn/', $salevote ) )
+		{
+			$datas = array();
+			
+			$datas[0]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[0]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 34, 'appid' => 814380, 'developerid' => 0 );
+			$datas[0]['cookies'] = $cookie;
 
-		$datas[1]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[1]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 35, 'appid' => 620980, 'developerid' => 0 );
-		$datas[1]['cookies'] = $cookie;
+			$datas[1]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[1]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 35, 'appid' => 620980, 'developerid' => 0 );
+			$datas[1]['cookies'] = $cookie;
 
-		$datas[2]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[2]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 36, 'appid' => 230410, 'developerid' => 0 );
-		$datas[2]['cookies'] = $cookie;
+			$datas[2]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[2]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 36, 'appid' => 230410, 'developerid' => 0 );
+			$datas[2]['cookies'] = $cookie;
 
-		$datas[3]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[3]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 37, 'appid' => 632360, 'developerid' => 0 );
-		$datas[3]['cookies'] = $cookie;
+			$datas[3]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[3]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 37, 'appid' => 632360, 'developerid' => 0 );
+			$datas[3]['cookies'] = $cookie;
 
-		$datas[4]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[4]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 38, 'appid' => 736260, 'developerid' => 0 );
-		$datas[4]['cookies'] = $cookie;
+			$datas[4]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[4]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 38, 'appid' => 736260, 'developerid' => 0 );
+			$datas[4]['cookies'] = $cookie;
 
-		$datas[5]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[5]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 39, 'appid' => 752590, 'developerid' => 0 );
-		$datas[5]['cookies'] = $cookie;
+			$datas[5]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[5]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 39, 'appid' => 752590, 'developerid' => 0 );
+			$datas[5]['cookies'] = $cookie;
 
-		$datas[6]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[6]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 40, 'appid' => 629760, 'developerid' => 0 );
-		$datas[6]['cookies'] = $cookie;
+			$datas[6]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[6]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 40, 'appid' => 629760, 'developerid' => 0 );
+			$datas[6]['cookies'] = $cookie;
 
-		$datas[7]['url']  = 'https://store.steampowered.com/salevote';
-		$datas[7]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 41, 'appid' => 683320, 'developerid' => 0 );
-		$datas[7]['cookies'] = $cookie;
-		
-		$request = ExecuteRequest( $datas, [], array( 'X-Requested-With: XMLHttpRequest' ), '', '', true );
-		
+			$datas[7]['url']  = 'https://store.steampowered.com/salevote';
+			$datas[7]['post'] = array( 'sessionid' => $store_sessionid, 'voteid' => 41, 'appid' => 683320, 'developerid' => 0 );
+			$datas[7]['cookies'] = $cookie;
+			
+			$request = ExecuteRequest( $datas, [], array( 'X-Requested-With: XMLHttpRequest' ), '', '', true );
+		}
+		else
+		{
+			Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - Already voted for Steam Awards');
+		}
+			
 		for( $n = 0; $n < 3; $n++ )
 		{
 			$datas = array();
 
+			$data = ExecuteRequest( 'https://store.steampowered.com/explore/', [], [], '', ''  );
+			
+			if( preg_match( '/Come back tomorrow/', $data ) )
+			{
+				if( preg_match( '/You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
+				{
+					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
+				}
+				
+				break;
+			}
+			
 			$data = ExecuteRequest( 'https://store.steampowered.com/explore/generatenewdiscoveryqueue', array( 'sessionid' => $store_sessionid, 'queuetype' => 0 ), [], '', ''  );
 			$data = json_decode( $data, true );
 			
@@ -282,114 +301,146 @@ foreach( $bots as $json )
 		
 		if(!empty($trade_me))
 		{
-			$tradeoffer = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken, [], [], '', '', false );
-			
-			if(preg_match('/"newversion":true,"version":(.*?),"/', $tradeoffer, $version))
+			$retry = 10;
+			$success = 0;
+
+			while($retry >= 0 && $success == 0)
 			{
-				$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$SteamUserPermissions, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
-				$ret = json_decode($ret, true);
+				$tradeoffer = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken, [], [], '', '', false );
 				
-				if(isset($ret['tradeofferid']))
+				if(preg_match('/"newversion":true,"version":(.*?),"/', $tradeoffer, $version))
 				{
-					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
-				
+					$success = 1;
 					$retry = 10;
-					$success = 0;
 
 					while($retry >= 0 && $success == 0)
 					{
 						$success = 0;
-						$time = time( );
-						if( isset( $GetTimeDifference ) )
+
+						$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$SteamUserPermissions, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
+						$ret = json_decode($ret, true);
+						
+						if(isset($ret['tradeofferid']))
 						{
-							$time = time( ) + $GetTimeDifference;
-						}
-						
-						$arraytime = $time;
-						$tag = 'conf';
-						
-						$identitySecret = base64_decode($identity_secret);
-						$array = $tag ? substr($tag, 0, 32) : '';
-					
-						for($i=8; $i>0; $i--)
-						{
-							$array = chr($arraytime & 0xFF) . $array;
-							$arraytime >>= 8;
-						}
-						
-						$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
-						
-						$generateconfirmation = ExecuteRequest( 'https://steamcommunity.com/mobileconf/conf?p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
-						
-						if(preg_match('/data-confid="(\d+)" data-key="(\d+)" data-type="(\d+)" data-creator="'.$ret['tradeofferid'].'"/', $generateconfirmation, $conf))
-						{
-							$cid = $conf[1];
-							$ck = $conf[2];
+							$retry = 10;
 							$success = 1;
-						}
 							
+							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
+						
+							$retry = 10;
+
+							while($retry >= 0 && $success == 0)
+							{
+								$success = 0;
+								$time = time( );
+								if( isset( $GetTimeDifference ) )
+								{
+									$time = time( ) + $GetTimeDifference;
+								}
+								
+								$arraytime = $time;
+								$tag = 'conf';
+								
+								$identitySecret = base64_decode($identity_secret);
+								$array = $tag ? substr($tag, 0, 32) : '';
+							
+								for($i=8; $i>0; $i--)
+								{
+									$array = chr($arraytime & 0xFF) . $array;
+									$arraytime >>= 8;
+								}
+								
+								$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
+								
+								$generateconfirmation = ExecuteRequest( 'https://steamcommunity.com/mobileconf/conf?p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
+								
+								if(preg_match('/data-confid="(\d+)" data-key="(\d+)" data-type="(\d+)" data-creator="'.$ret['tradeofferid'].'"/', $generateconfirmation, $conf))
+								{
+									$cid = $conf[1];
+									$ck = $conf[2];
+									$success = 1;
+								}
+									
+								if($success == 0)
+								{
+									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' confirmation (retry)');
+									sleep(5);
+								}
+								
+								$retry--;
+							}
+						}
+
+						if(isset($cid) && isset($ck))
+						{
+							$retry = 10;
+							$success = 0;
+
+							while($retry >= 0 && $success == 0)
+							{
+								$success = 0;
+								
+								$time = time( );
+								if( isset( $GetTimeDifference ) )
+								{
+									$time = time( ) + $GetTimeDifference;
+								}
+								
+								$arraytime = $time;
+								$tag = 'allow';
+								
+								$identitySecret = base64_decode($identity_secret);
+								$array = $tag ? substr($tag, 0, 32) : '';
+								
+								for($i=8; $i>0; $i--)
+								{
+									$array = chr($arraytime & 0xFF) . $array;
+									$arraytime >>= 8;
+								}
+								
+								$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
+								
+								$allow = ExecuteRequest( 'https://steamcommunity.com/mobileconf/ajaxop?op='.$tag.'&p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag.'&cid='.$cid.'&ck='.$ck, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
+								$allow = json_decode($allow);
+								
+								if(isset($allow->success) && $allow->success == 1)
+								{
+									$success = 1;
+									Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid'].' - trade confirmed...' );
+								}
+								
+								if($success == 0)
+								{
+									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - confirmation (retry)');
+									sleep(5);
+								}
+								
+								$retry--;
+							}
+						}
 						if($success == 0)
 						{
-							printf( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' confirmation on hold (retry)\n');
+							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - trade (retry)');
 							sleep(5);
 						}
 						
 						$retry--;
 					}
 				}
-
-				if(isset($cid) && isset($ck))
+				
+				
+				if($success == 0)
 				{
-					$retry = 10;
-					$success = 0;
-
-					while($retry >= 0 && $success == 0)
-					{
-						$success = 0;
-						
-						$time = time( );
-						if( isset( $GetTimeDifference ) )
-						{
-							$time = time( ) + $GetTimeDifference;
-						}
-						
-						$arraytime = $time;
-						$tag = 'allow';
-						
-						$identitySecret = base64_decode($identity_secret);
-						$array = $tag ? substr($tag, 0, 32) : '';
-						
-						for($i=8; $i>0; $i--)
-						{
-							$array = chr($arraytime & 0xFF) . $array;
-							$arraytime >>= 8;
-						}
-						
-						$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
-						
-						$allow = ExecuteRequest( 'https://steamcommunity.com/mobileconf/ajaxop?op='.$tag.'&p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag.'&cid='.$cid.'&ck='.$ck, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
-						$allow = json_decode($allow);
-						
-						if(isset($allow->success) && $allow->success == 1)
-						{
-							$success = 1;
-							Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid'].' trade confirmed...' );
-						}
-						
-						if($success == 0)
-						{
-							Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - confirmation (retry)');
-							sleep(5);
-						}
-						
-						$retry--;
-					}
+					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - trade (retry)');
+					sleep(5);
 				}
+				
+				$retry--;
 			}
 		}
 		else
 		{
-			Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - nothing to trade' );
+			Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - nothing to trade' );
 		}
 	}
 	
