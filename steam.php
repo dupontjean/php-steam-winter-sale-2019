@@ -434,12 +434,19 @@ foreach( $bots as $json )
 							}
 						}
 						
+						
+						if( $success2 == 0 )
+						{
+							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
+							sleep(5);
+						}
+						
 						$retry2--;
 					}
 				}
 				
 				
-				if( $success2 == 0 )
+				if( $success1 == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
 					sleep(5);
