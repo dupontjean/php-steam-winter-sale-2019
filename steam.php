@@ -66,6 +66,12 @@ foreach( $bots as $json )
 		$identity_secret = $archi['_MobileAuthenticator']['identity_secret'];
 	}
 	
+	if( !isset ( $shared_secret, $device_id, $identity_secret ) )
+	{
+		Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . '  Missing mobile authenticator...' );
+		continue;
+	}
+	
 	$asf = json_decode( ltrim( _fread( $json ), chr( 239 ) . chr( 187 ) . chr( 191 ) ), true );
 	
 	if( isset ( $asf['SteamLogin'], $asf['SteamPassword'], $asf['SteamUserPermissions'], $asf['SteamTradeToken'] ) )
