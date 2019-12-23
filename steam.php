@@ -51,7 +51,7 @@ foreach( $bots as $json )
 	
 	if( file_exists( $maFile ) )
 	{
-		$sda = json_decode( _fread( $maFile ), true );
+		$sda = json_decode( ltrim( _fread( $maFile ), chr( 239 ) . chr( 187 ) . chr( 191 ) ), true );
 		$shared_secret = $sda['shared_secret'];
 		$device_id = $sda['device_id'];
 		$identity_secret = $sda['identity_secret'];
@@ -60,13 +60,13 @@ foreach( $bots as $json )
 	
 	if( file_exists( $db ) )
 	{
-		$archi = json_decode( _fread( $db ), true );
+		$archi = json_decode( ltrim( _fread( $db ), chr( 239 ) . chr( 187 ) . chr( 191 ) ), true );
 		$shared_secret = $archi['_MobileAuthenticator']['shared_secret'];
 		$device_id = $archi['_MobileAuthenticator']['device_id'];
 		$identity_secret = $archi['_MobileAuthenticator']['identity_secret'];
 	}
 	
-	$asf = json_decode( _fread( $json ), true );
+	$asf = json_decode( ltrim( _fread( $json ), chr( 239 ) . chr( 187 ) . chr( 191 ) ), true );
 	
 	if( isset ( $asf['SteamLogin'], $asf['SteamPassword'], $asf['SteamUserPermissions'], $asf['SteamTradeToken'] ) )
 	{
