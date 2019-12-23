@@ -342,7 +342,7 @@ foreach( $bots as $json )
 						{
 							$success2 = 1;
 							
-							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
+							Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
 						
 							$retry3 = 10;
 							$success3 = 0;
