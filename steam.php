@@ -243,7 +243,7 @@ foreach( $bots as $json )
 			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Already voted for Steam Awards');
 		}
 			
-		for( $n = 0; $n < 3; $n++ )
+		for( $n = 0; $n < 4; $n++ )
 		{
 			$datas = array();
 
@@ -251,7 +251,7 @@ foreach( $bots as $json )
 			
 			if( preg_match( '/Come back tomorrow/', $data ) )
 			{
-				if( preg_match( '/You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
+				if( preg_match( '/Come back tomorrow! You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
 				{
 					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
 				}
