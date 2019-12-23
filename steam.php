@@ -3,6 +3,12 @@
 ini_set('memory_limit', '-1');
 set_time_limit( 0 );
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 include_once  __DIR__ . '/Crypt/RSA.php';
 
 $bots = glob( __DIR__ . '/config/*.json' );
