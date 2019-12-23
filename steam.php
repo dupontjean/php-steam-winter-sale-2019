@@ -251,9 +251,9 @@ foreach( $bots as $json )
 			
 			if( preg_match( '/Come back tomorrow/', $data ) )
 			{
-				if( preg_match( '/Come back tomorrow! You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
+				if( preg_match( '/You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
 				{
-					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
+					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Come back tomorrow! You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
 				}
 				
 				break;
