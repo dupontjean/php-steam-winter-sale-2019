@@ -49,41 +49,50 @@ foreach( $bots as $json )
 	
 	if( file_exists( $maFile ) )
 	{
-		$sda = json_decode( file_get_contents( $maFile ) );
-		$shared_secret = $sda->shared_secret;
-		$device_id = $sda->device_id;
-		$identity_secret = $sda->identity_secret;
+		$sda = json_decode( _fread( $maFile ), true );
+		$shared_secret = $sda['shared_secret'];
+		$device_id = $sda['device_id'];
+		$identity_secret = $sda['identity_secret'];
 	}
 	
 	
 	if( file_exists( $db ) )
 	{
-		$archi = json_decode( file_get_contents( $db ) );
-		$shared_secret = $archi->_MobileAuthenticator->shared_secret;
-		$device_id = $archi->_MobileAuthenticator->device_id;
-		$identity_secret = $archi->_MobileAuthenticator->identity_secret;
+		$archi = json_decode( _fread( $db ), true );
+		$shared_secret = $archi['_MobileAuthenticator']['shared_secret'];
+		$device_id = $archi['_MobileAuthenticator']['device_id'];
+		$identity_secret = $archi['_MobileAuthenticator']['identity_secret'];
 	}
 	
-	$asf = file_get_contents( $json );
+	$asf = json_decode( _fread( $json ), true );
 	
-	if( preg_match('/"SteamLogin":( *)"(.*?)",/', $asf, $SteamLogin) )
+	if( isset ( $asf['SteamLogin'], $asf['SteamPassword'], $asf['SteamUserPermissions'], $asf['SteamTradeToken'] ) )
 	{
-		$SteamLogin = $SteamLogin[2];
+		$SteamLogin = $asf['SteamLogin'];
+		$SteamPassword = $asf['SteamPassword'];
+		$SteamUserPermissions = $asf['SteamUserPermissions'];
+		$SteamTradeToken = $asf['SteamTradeToken'];
+		
+		$sendtradeID = '';
+		foreach($SteamUserPermissions as $admin => $perm)
+		{
+			if( $perm == 3 )
+			{
+				$sendtradeID = $admin;
+				break;
+			}
+		}
+		
+		if( empty( $sendtradeID ) )
+		{
+			Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . '  Missing SteamUserPermissions...' );
+			continue;
+		}
 	}
-	
-	if( preg_match('/"SteamPassword":( *)"(.*?)",/', $asf, $SteamPassword) )
+	else
 	{
-		$SteamPassword = $SteamPassword[2];
-	}
-	
-	if( preg_match('/"SteamUserPermissions":( *){"(.*?)"/', $asf, $SteamUserPermissions) )
-	{
-		$SteamUserPermissions = $SteamUserPermissions[2];
-	}
-	
-	if( preg_match('/"SteamTradeToken":( *)"(.*?)",/', $asf, $SteamTradeToken) )
-	{
-		$SteamTradeToken = $SteamTradeToken[2];
+		Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . '  Invalid json...' );
+		continue;
 	}
 	
 	$retry = 5;
@@ -297,7 +306,7 @@ foreach( $bots as $json )
 			}
 		}
 		
-		$id32 = toUserID( $SteamUserPermissions );
+		$id32 = toUserID( $sendtradeID );
 		
 		if( !empty( $trade_me ) )
 		{
@@ -317,7 +326,7 @@ foreach( $bots as $json )
 					{
 						$success = 0;
 
-						$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$SteamUserPermissions, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
+						$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$sendtradeID, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
 						$ret = json_decode( $ret, true );
 						
 						if( isset( $ret['tradeofferid'] ) )
@@ -802,4 +811,20 @@ function toUserID( $id )
 	{
         return $id;
     }
+}
+
+function _fread ( $file = null )
+{
+    if( is_readable( $file ) )
+	{
+        if ( !( $fh = fopen( $file, 'r' ) ) ) return false;
+        $data = fread( $fh, filesize( $file ) );
+
+        $bom = pack( 'H*','EFBBBF' );
+        $data = preg_replace( '/^$bom/', '', $data );
+
+        fclose( $fh );
+        return $data;
+    }
+    return false;
 }
