@@ -240,7 +240,7 @@ foreach( $bots as $json )
 		}
 		else
 		{
-			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - Already voted for Steam Awards');
+			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Already voted for Steam Awards');
 		}
 			
 		for( $n = 0; $n < 3; $n++ )
@@ -253,7 +253,7 @@ foreach( $bots as $json )
 			{
 				if( preg_match( '/You\'ve completed your queue and have unlocked (.*?) event trading cards!/', $data, $unlocked ) )
 				{
-					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
+					Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' You\'ve completed your queue and have unlocked ' . $unlocked[1] . ' event trading cards!');
 				}
 				
 				break;
@@ -275,7 +275,7 @@ foreach( $bots as $json )
 		$cards = array();
 		$me_inventory = foo($steamid, 0);
 		
-		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - Checking inventory...' );
+		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Checking inventory...' );
 		
 		$trade_me = array();
 		
@@ -363,7 +363,7 @@ foreach( $bots as $json )
 									
 								if($success == 0)
 								{
-									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' confirmation (retry)');
+									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
 									sleep(5);
 								}
 								
@@ -411,7 +411,7 @@ foreach( $bots as $json )
 								
 								if($success == 0)
 								{
-									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - confirmation (retry)');
+									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
 									sleep(5);
 								}
 								
@@ -420,7 +420,7 @@ foreach( $bots as $json )
 						}
 						if($success == 0)
 						{
-							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - trade (retry)');
+							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
 							sleep(5);
 						}
 						
@@ -431,7 +431,7 @@ foreach( $bots as $json )
 				
 				if($success == 0)
 				{
-					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - trade (retry)');
+					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
 					sleep(5);
 				}
 				
@@ -440,7 +440,7 @@ foreach( $bots as $json )
 		}
 		else
 		{
-			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' - nothing to trade' );
+			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Nothing to trade' );
 		}
 	}
 	
