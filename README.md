@@ -1,4 +1,4 @@
-%le motorola assure mes narco-dollars%
+# %le motorola assure mes narco-dollars%
 
-https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config //json
-https://github.com/Jessecar96/SteamDesktopAuthenticator //maFile
+<code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config </code>
+<code> https://github.com/Jessecar96/SteamDesktopAuthenticator </code>
