@@ -272,25 +272,25 @@ foreach( $bots as $json )
 			$request = ExecuteRequest( $datas, [], [], '', false, true );
 		}
 		
-		$cards = array();
-		$me_inventory = foo($steamid, 0);
+		$cards = array( );
+		$me_inventory = foo( $steamid, 0 );
 		
 		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Checking inventory...' );
 		
-		$trade_me = array();
+		$trade_me = array( );
 		
-		foreach($me_inventory as $appids => $cards)
+		foreach( $me_inventory as $appids => $cards )
 		{
 			$want = array();
 			
-			foreach($cards as $key => $value)
+			foreach( $cards as $key => $value )
 			{
-					$want[$key]     = $value;
+				$want[$key]     = $value;
 			}
 			
-			if(!empty($want))
+			if( !empty( $want ) )
 			{
-				foreach($want as $key => $value)
+				foreach( $want as $key => $value )
 				{
 					$trade_me[] = '{"appid":753,"contextid":"6","amount":1,"assetid":"'.$key.'"}';
 				}
@@ -299,28 +299,28 @@ foreach( $bots as $json )
 		
 		$id32 = toUserID( $SteamUserPermissions );
 		
-		if(!empty($trade_me))
+		if( !empty( $trade_me ) )
 		{
 			$retry = 10;
 			$success = 0;
 
-			while($retry >= 0 && $success == 0)
+			while( $retry >= 0 && $success == 0 )
 			{
 				$tradeoffer = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken, [], [], '', '', false );
 				
-				if(preg_match('/"newversion":true,"version":(.*?),"/', $tradeoffer, $version))
+				if(preg_match( '/"newversion":true,"version":(.*?),"/', $tradeoffer, $version ) )
 				{
 					$success = 1;
 					$retry = 10;
 
-					while($retry >= 0 && $success == 0)
+					while( $retry >= 0 && $success == 0 )
 					{
 						$success = 0;
 
 						$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$SteamUserPermissions, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
-						$ret = json_decode($ret, true);
+						$ret = json_decode( $ret, true );
 						
-						if(isset($ret['tradeofferid']))
+						if( isset( $ret['tradeofferid'] ) )
 						{
 							$retry = 10;
 							$success = 1;
@@ -329,7 +329,7 @@ foreach( $bots as $json )
 						
 							$retry = 10;
 
-							while($retry >= 0 && $success == 0)
+							while( $retry >= 0 && $success == 0 )
 							{
 								$success = 0;
 								$time = time( );
@@ -341,42 +341,42 @@ foreach( $bots as $json )
 								$arraytime = $time;
 								$tag = 'conf';
 								
-								$identitySecret = base64_decode($identity_secret);
-								$array = $tag ? substr($tag, 0, 32) : '';
+								$identitySecret = base64_decode( $identity_secret );
+								$array = $tag ? substr( $tag, 0, 32 ) : '';
 							
-								for($i=8; $i>0; $i--)
+								for( $i=8; $i>0; $i-- )
 								{
-									$array = chr($arraytime & 0xFF) . $array;
+									$array = chr( $arraytime & 0xFF ) . $array;
 									$arraytime >>= 8;
 								}
 								
-								$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
+								$code = base64_encode(hash_hmac( 'sha1', $array, $identitySecret, true ) );
 								
 								$generateconfirmation = ExecuteRequest( 'https://steamcommunity.com/mobileconf/conf?p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
 								
-								if(preg_match('/data-confid="(\d+)" data-key="(\d+)" data-type="(\d+)" data-creator="'.$ret['tradeofferid'].'"/', $generateconfirmation, $conf))
+								if( preg_match( '/data-confid="(\d+)" data-key="(\d+)" data-type="(\d+)" data-creator="'.$ret['tradeofferid'].'"/', $generateconfirmation, $conf ) )
 								{
 									$cid = $conf[1];
 									$ck = $conf[2];
 									$success = 1;
 								}
 									
-								if($success == 0)
+								if( $success == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep(5);
+									sleep( 5 );
 								}
 								
 								$retry--;
 							}
 						}
 
-						if(isset($cid) && isset($ck))
+						if( isset( $cid ) && isset( $ck ) )
 						{
 							$retry = 10;
 							$success = 0;
 
-							while($retry >= 0 && $success == 0)
+							while( $retry >= 0 && $success == 0 )
 							{
 								$success = 0;
 								
@@ -389,39 +389,39 @@ foreach( $bots as $json )
 								$arraytime = $time;
 								$tag = 'allow';
 								
-								$identitySecret = base64_decode($identity_secret);
-								$array = $tag ? substr($tag, 0, 32) : '';
+								$identitySecret = base64_decode( $identity_secret );
+								$array = $tag ? substr( $tag, 0, 32 ) : '';
 								
-								for($i=8; $i>0; $i--)
+								for( $i=8; $i>0; $i-- )
 								{
-									$array = chr($arraytime & 0xFF) . $array;
+									$array = chr( $arraytime & 0xFF ) . $array;
 									$arraytime >>= 8;
 								}
 								
-								$code = base64_encode(hash_hmac('sha1', $array, $identitySecret, true));
+								$code = base64_encode( hash_hmac( 'sha1', $array, $identitySecret, true ) );
 								
 								$allow = ExecuteRequest( 'https://steamcommunity.com/mobileconf/ajaxop?op='.$tag.'&p='.$device_id.'&a='.$steamid.'&k='.$code.'&t='.$time.'&m=android&tag='.$tag.'&cid='.$cid.'&ck='.$ck, [], array('X-Requested-With: com.valvesoftware.android.steam.community'), '', '', false, '', 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' );
-								$allow = json_decode($allow);
+								$allow = json_decode( $allow );
 								
-								if(isset($allow->success) && $allow->success == 1)
+								if( isset( $allow->success ) && $allow->success == 1 )
 								{
 									$success = 1;
 									Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid'].' - trade confirmed...' );
 								}
 								
-								if($success == 0)
+								if( $success == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep(5);
+									sleep( 5 );
 								}
 								
 								$retry--;
 							}
 						}
-						if($success == 0)
+						if( $success == 0 )
 						{
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-							sleep(5);
+							sleep( 5 );
 						}
 						
 						$retry--;
@@ -429,7 +429,7 @@ foreach( $bots as $json )
 				}
 				
 				
-				if($success == 0)
+				if( $success == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
 					sleep(5);
@@ -557,7 +557,7 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 			if( curl_errno ( $c ) )
 			{
 				$failed = 1;
-				Msg( '{lightred}' . $URL . ' failed - ' . curl_error($c) );
+				Msg( '{lightred}' . $URL . ' failed - ' . curl_error( $c ) );
 			}
 
 			if ( $responseCode >= 400 )
@@ -637,8 +637,8 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 			{
 				$failed = 0;
 			
-				$Data[$id] = curl_multi_getcontent($d);
-				curl_multi_remove_handle($mh, $d);
+				$Data[$id] = curl_multi_getcontent( $d );
+				curl_multi_remove_handle( $mh, $d );
 				
 				$responseCode = curl_getinfo( $d, CURLINFO_HTTP_CODE );
 				$HeaderSize = curl_getinfo( $d, CURLINFO_HEADER_SIZE );
@@ -658,7 +658,7 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 				if( curl_errno ( $d ) )
 				{
 					$failed = 1;
-					Msg( '{lightred}' . $URL[$id]['url'] . ' failed - ' . curl_error($d) );
+					Msg( '{lightred}' . $URL[$id]['url'] . ' failed - ' . curl_error( $d ) );
 				}
 
 				if ( $responseCode >= 400 )
@@ -674,7 +674,7 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 		
 		return $Data;
 
-		curl_multi_close($mh);
+		curl_multi_close( $mh );
 		
 	}
 }
@@ -722,7 +722,7 @@ function Msg( $Message, $EOL = PHP_EOL, $printf = [] )
 
 class BodyPost
 {
-	public static function PartPost($name, $val)
+	public static function PartPost( $name, $val )
 	{
 		$body = 'Content-Disposition: form-data; name="' . $name . '"';
 		$body .= "\r\n\r\n".$val."\r\n";
@@ -730,41 +730,41 @@ class BodyPost
 		return $body;
 	}
 
-	public static function Get(array $post, $delimiter='-------------0123456789')
+	public static function Get( array $post, $delimiter='-------------0123456789' )
 	{
-		if(is_array($post) && !empty($post))
+		if( is_array( $post ) && !empty( $post ) )
 		{
-			foreach($post as $val)
+			foreach( $post as $val )
 				$ret = '';
-				foreach($post as $name=>$val)
-				$ret .= '--' . $delimiter. "\r\n". self::PartPost($name, $val);
+				foreach( $post as $name=>$val )
+				$ret .= '--' . $delimiter. "\r\n". self::PartPost( $name, $val );
 				$ret .= "--" . $delimiter . "--\r\n";
 		}
-		else throw new \Exception('Error input param!');
+		else throw new \Exception( 'Error input param!' );
 		return $ret;
 	}
 };
 
-function foo($steamid, $last_assetid)
+function foo( $steamid, $last_assetid )
 {
 	global $cards, $apps, $cookie;
 	
 	$inventory = ExecuteRequest( 'https://steamcommunity.com/inventory/'.$steamid.'/753/6?l=english&count=5000&start_assetid='.$last_assetid, [], [], '', false, false );
-	$inventory = json_decode($inventory,true);
+	$inventory = json_decode( $inventory, true );
 	
-	if(isset($inventory['descriptions']))
+	if(isset( $inventory['descriptions'] ) )
 	{
-		foreach($inventory['descriptions'] as $descriptions)
+		foreach( $inventory['descriptions'] as $descriptions )
 		{
-			if($descriptions['tradable'] === 1)
+			if( $descriptions['tradable'] === 1 )
 			{
-				foreach($descriptions['tags'] as $tags)
+				foreach( $descriptions['tags'] as $tags )
 				{								
-					if($tags['category'] == 'cardborder')
+					if( $tags['category'] == 'cardborder' )
 					{
-						foreach($inventory['assets'] as $assets)
+						foreach( $inventory['assets'] as $assets )
 						{
-							if($assets['classid'] == $descriptions['classid'])
+							if( $assets['classid'] == $descriptions['classid'] )
 							{
 								$cards[$descriptions['market_fee_app']][$assets['assetid']] = $descriptions['classid'];
 							}
@@ -775,25 +775,31 @@ function foo($steamid, $last_assetid)
 		}
 	}
 	
-	if(isset($inventory['last_assetid']))
+	if( isset( $inventory['last_assetid'] ) )
 	{
 		$last_assetid = $inventory['last_assetid'];
 		
 		sleep(1);
 		
-		$cards = foo($steamid, $last_assetid);
+		$cards = foo( $steamid, $last_assetid );
 	}
 	
 	return $cards;
 }
 
-function toUserID($id) {
-    if (preg_match('/^STEAM_/', $id)) {
-        $split = explode(':', $id);
+function toUserID( $id )
+{
+    if( preg_match( '/^STEAM_/', $id ) )
+	{
+        $split = explode( ':', $id );
         return $split[2] * 2 + $split[1];
-    } elseif (preg_match('/^765/', $id) && strlen($id) > 15) {
-        return bcsub($id, '76561197960265728');
-    } else {
+    }
+	elseif( preg_match( '/^765/', $id ) && strlen( $id ) > 15 )
+	{
+        return bcsub( $id, '76561197960265728' );
+    }
+	else
+	{
         return $id;
     }
 }
