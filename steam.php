@@ -4,8 +4,8 @@ set_time_limit( 0 );
 
 include_once  __DIR__ . '/Crypt/RSA.php';
 
-$bots = glob( __DIR__ . '/config/*.json', GLOB_BRACE );
-usort(  $bots,   function($a,$b) {	return basename($a) <=> basename($b); } );
+$bots = glob( __DIR__ . '/config/*.json' );
+natsort($bots);
 
 $counter = 0;
 $bots_total = count( $bots );
@@ -318,37 +318,37 @@ foreach( $bots as $json )
 		
 		if( !empty( $trade_me ) )
 		{
-			$retry = 10;
-			$success = 0;
+			$retry1 = 10;
+			$success1 = 0;
 
-			while( $retry >= 0 && $success == 0 )
+			while( $retry1 >= 0 && $success1 == 0 )
 			{
 				$tradeoffer = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken, [], [], '', '', false );
 				
 				if(preg_match( '/"newversion":true,"version":(.*?),"/', $tradeoffer, $version ) )
 				{
-					$success = 1;
-					$retry = 10;
+					$success1 = 1;
+					
+					$retry2 = 10;
+					$success2 = 0;
 
-					while( $retry >= 0 && $success == 0 )
+					while( $retry2 >= 0 && $success2 == 0 )
 					{
-						$success = 0;
 
 						$ret = ExecuteRequest( 'https://steamcommunity.com/tradeoffer/new/send', array('sessionid'=>$community_sessionid, 'serverid'=>1, 'partner'=>$sendtradeID, 'tradeoffermessage'=>'que du sale', 'json_tradeoffer'=>'{"newversion":true,"version":'.$version[1].',"me":{"assets":['.implode(',', $trade_me).'],"currency":[],"ready":false},"them":{"assets":[],"currency":[],"ready":false}}', 'captcha'=>'', 'trade_offer_create_params'=>'{"trade_offer_access_token":"'.$SteamTradeToken.'"}'), [], '', 'bCompletedTradeOfferTutorial=true;', false, 'https://steamcommunity.com/tradeoffer/new/?partner='.$id32.'&token='.$SteamTradeToken );
 						$ret = json_decode( $ret, true );
 						
 						if( isset( $ret['tradeofferid'] ) )
 						{
-							$retry = 10;
-							$success = 1;
+							$success2 = 1:
 							
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
 						
-							$retry = 10;
-
-							while( $retry >= 0 && $success == 0 )
+							$retry3 = 10;
+							$success3 = 0;
+					
+							while( $retry3 >= 0 && $success3 == 0 )
 							{
-								$success = 0;
 								$time = time( );
 								if( isset( $GetTimeDifference ) )
 								{
@@ -375,28 +375,26 @@ foreach( $bots as $json )
 								{
 									$cid = $conf[1];
 									$ck = $conf[2];
-									$success = 1;
+									$success3 = 1;
 								}
 									
-								if( $success == 0 )
+								if( $success3 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
 									sleep( 5 );
 								}
 								
-								$retry--;
+								$retry3--;
 							}
 						}
 
 						if( isset( $cid ) && isset( $ck ) )
 						{
-							$retry = 10;
-							$success = 0;
+							$retry4 = 10;
+							$success4 = 0;
 
-							while( $retry >= 0 && $success == 0 )
-							{
-								$success = 0;
-								
+							while( $retry4 >= 0 && $success4 == 0 )
+							{								
 								$time = time( );
 								if( isset( $GetTimeDifference ) )
 								{
@@ -422,37 +420,32 @@ foreach( $bots as $json )
 								
 								if( isset( $allow->success ) && $allow->success == 1 )
 								{
-									$success = 1;
+									$success4 = 1;
 									Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid'].' - trade confirmed...' );
 								}
 								
-								if( $success == 0 )
+								if( $success4 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
 									sleep( 5 );
 								}
 								
-								$retry--;
+								$retry4--;
 							}
 						}
-						if( $success == 0 )
-						{
-							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-							sleep( 5 );
-						}
 						
-						$retry--;
+						$retry2--;
 					}
 				}
 				
 				
-				if( $success == 0 )
+				if( $success2 == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
 					sleep(5);
 				}
 				
-				$retry--;
+				$retry1--;
 			}
 		}
 		else
