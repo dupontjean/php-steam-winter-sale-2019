@@ -1,4 +1,4 @@
-### STEAM WINTER SALE 2019
+## STEAM WINTER SALE 2019
 
 <code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config </code>
 
