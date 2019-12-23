@@ -6,4 +6,4 @@ Sale vote (Steam Awards), discovery queue and auto trade
 
 <code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config </code>
 
-<code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Two-factor-authentication#two-factor-authentication </code>
+<code> https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Two-factor-authentication </code>
