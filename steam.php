@@ -337,7 +337,7 @@ foreach( $bots as $json )
 			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Already voted for Steam Awards');
 		}
 			
-		for( $n = 0; $n < 4; $n++ )
+		for( $n = 0; $n < 3; $n++ )
 		{
 			$datas = array();
 
@@ -461,7 +461,7 @@ foreach( $bots as $json )
 								if( $success3 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep( 1 );
+									usleep( 600000 );
 								}
 								
 								$retry3--;
@@ -507,7 +507,7 @@ foreach( $bots as $json )
 								if( $success4 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep( 1 );
+									usleep( 600000 );
 								}
 								
 								$retry4--;
@@ -518,7 +518,7 @@ foreach( $bots as $json )
 						if( $success2 == 0 )
 						{
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-							sleep( 1 );
+							usleep( 600000 );
 						}
 						
 						$retry2--;
@@ -529,7 +529,7 @@ foreach( $bots as $json )
 				if( $success1 == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-					sleep( 1 );
+					usleep( 600000 );
 				}
 				
 				$retry1--;
