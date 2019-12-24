@@ -391,7 +391,7 @@ foreach( $bots as $json )
 								if( $success3 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep( 2 );
+									sleep( 1 );
 								}
 								
 								$retry3--;
@@ -437,7 +437,7 @@ foreach( $bots as $json )
 								if( $success4 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									sleep( 2 );
+									sleep( 1 );
 								}
 								
 								$retry4--;
@@ -448,7 +448,7 @@ foreach( $bots as $json )
 						if( $success2 == 0 )
 						{
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-							sleep( 2 );
+							sleep( 1 );
 						}
 						
 						$retry2--;
@@ -459,7 +459,7 @@ foreach( $bots as $json )
 				if( $success1 == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-					sleep( 2 );
+					sleep( 1 );
 				}
 				
 				$retry1--;
