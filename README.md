@@ -1,6 +1,6 @@
 # Steam Winter Sale 2019
 
-Sale vote (Steam Awards), discovery queue and auto trade
+Sale vote (Steam Awards) discovery queue and auto trade
 
 ## For config files refer to:
 
