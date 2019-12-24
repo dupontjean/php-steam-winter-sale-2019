@@ -222,6 +222,68 @@ foreach( $bots as $json )
 	{
 		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Successfully logged as ' . $steamid .  ( !empty( $vanityurl ) ? '/' . $vanityurl : '' ) . '.' );
 		
+		$holidayquests = ExecuteRequest( 'https://store.steampowered.com/holidayquests', [], [], '', '', false );
+		
+		$dom = new DOMDocument( );
+		$dom->loadHTML( $holidayquests );
+		$finder = new DOMXpath( $dom );
+		$elements = $finder->query( './/div[@class=\'winter2019_quest\']' );
+
+		foreach( $elements as $element )
+		{
+			$checked = $finder->query( './/div[@class=\'winter2019_quest_checked\']', $element);
+			
+			if( preg_match( '/Interact with Steam Labs Interactive Recommender/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/recommender/' . $steamid . '/results?sessionid=' . $store_sessionid . '&steamid=' . $steamid . '&include_played=0&algorithm=0&reinference=0&model_version=0', [], [], '', false  );
+				}
+			}
+			
+			if( preg_match( '/Take a Steam Labs Deep Dive/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/labs/divingbell', [], [], '', false  );
+				}
+			}
+			
+			if( preg_match( '/Search for Something New/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/labs/search/', [], [], '', false  );
+				}
+			}
+			
+			if( preg_match( '/Check out Steam Labs Community Recommendations/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/labs/trendingreviews', [], [], '', false  );
+				}
+			}
+			
+			if( preg_match( '/Make a Wish/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 532790 ), [], '', false  );
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 782330 ), [], '', false  );
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 1091500 ), [], '', false  );
+				}
+			}
+			
+			if( preg_match( '/Watch the Yule Log Burn/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://steam.tv/broadcast/getbroadcastmpd/?steamid=76561197960266962&broadcastid=0&viewertoken=0&watchlocation=1&sessionid=0', [], [], '', false  );
+				}
+			}
+		}
+		
 		$salevote = ExecuteRequest( 'https://store.steampowered.com/steamawards', [], [], '', '', false );
 		
 		if( preg_match( '/award_card_btn/', $salevote ) )
