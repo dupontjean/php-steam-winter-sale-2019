@@ -307,16 +307,19 @@ foreach( $bots as $json )
 		{
 			$want = array();
 			
-			foreach( $cards as $key => $value )
+			if( $appids == 1195670)
 			{
-				$want[$key]     = $value;
-			}
-			
-			if( !empty( $want ) )
-			{
-				foreach( $want as $key => $value )
+				foreach( $cards as $key => $value )
 				{
-					$trade_me[] = '{"appid":753,"contextid":"6","amount":1,"assetid":"'.$key.'"}';
+					$want[$key]     = $value;
+				}
+				
+				if( !empty( $want ) )
+				{
+					foreach( $want as $key => $value )
+					{
+						$trade_me[] = '{"appid":753,"contextid":"6","amount":1,"assetid":"'.$key.'"}';
+					}
 				}
 			}
 		}
