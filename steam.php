@@ -282,6 +282,14 @@ foreach( $bots as $json )
 					$quest = ExecuteRequest( 'https://steam.tv/broadcast/getbroadcastmpd/?steamid=76561197960266962&broadcastid=0&viewertoken=0&watchlocation=1&sessionid=0', [], [], '', false  );
 				}
 			}
+			
+			// if( preg_match( '/Use Chat Stickers/', $element->textContent ) )
+			// {
+				// if( $checked->length == 0 )
+				// {
+					// $quest = ExecuteRequest( 'https://store.steampowered.com/holidayquests/ajaxclaimitem/', array( 'sessionid' => $store_sessionid, 'type' => 1), [], '', false  );
+				// }
+			// }
 		}
 		
 		$salevote = ExecuteRequest( 'https://store.steampowered.com/steamawards', [], [], '', '', false );
