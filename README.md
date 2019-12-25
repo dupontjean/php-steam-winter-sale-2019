@@ -1,6 +1,6 @@
 # Steam Winter Sale 2019
 
-Steam Winter Sale 2019 / Sale vote (Steam Awards) discovery queue, 6/11 holiday quests and auto trade
+Steam Winter Sale 2019 / Sale vote (Steam Awards) discovery queue, 6/12 holiday quests and auto trade
 
 ## For config files refer to:
 
