@@ -269,9 +269,9 @@ foreach( $bots as $json )
 			{
 				if( $checked->length == 0 )
 				{
-					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 532790 ), [], '', false  );
-					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 782330 ), [], '', false  );
-					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 1091500 ), [], '', false  );
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 1059440 ), [], '', false  );
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 1082550 ), [], '', false  );
+					$quest = ExecuteRequest( 'https://store.steampowered.com/api/addtowishlist', array( 'sessionid' => $store_sessionid, 'appid' => 1126170 ), [], '', false  );
 				}
 			}
 			
