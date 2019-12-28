@@ -9,7 +9,6 @@ ini_set( 'display_errors', 0 );
 // error_reporting( E_ALL );
 // ini_set( 'display_errors', 1 );
 
-$logs = file_put_contents('logs.txt', '');
 
 include_once  __DIR__ . '/Crypt/RSA.php';
 
@@ -21,6 +20,8 @@ $bots_total = count( $bots );
 
 $QueryTime = ExecuteRequest( 'http://api.steampowered.com/ITwoFactorService/QueryTime/v0001', array( 'steamid' => 0 ), [] );
 $QueryTime = json_decode( $QueryTime, true );
+
+$logs = file_put_contents( 'logs.txt', '' );
 
 $time = time();
 if( isset( $QueryTime['response']['server_time'] ) )
@@ -781,7 +782,7 @@ function Msg( $Message, $EOL = PHP_EOL, $printf = [] )
 {
 	global $DisableColors;
 	
-	$logs = file_put_contents('logs.txt', $Message.PHP_EOL , FILE_APPEND | LOCK_EX);
+	$logs = file_put_contents( 'logs.txt', $Message.PHP_EOL , FILE_APPEND | LOCK_EX );
 
 	$Message = str_replace(
 		[
