@@ -166,16 +166,10 @@ foreach( $bots as $json )
 			$dologin = ExecuteRequest( 'https://store.steampowered.com/login/dologin/', array( 'password' => $encryptedPassword, 'username' => $SteamLogin, 'twofactorcode' => $code, 'emailauth' => '', 'loginfriendlyname' => '', 'captchagid' => '-1', 'captcha_text' => '', 'emailsteamid' => '', 'rsatimestamp' => $getrsakey['timestamp'], 'remember_login' => 'true', 'donotcache' => ( microtime( true ) * 1000 ) ) );
 			$dologin = json_decode( $dologin, true );
 	
-			if( $dologin['success'] !== true || !isset( $dologin['success'] ) )
+			if( $dologin['success'] !== true )
 			{
-				if( $dologin['message'] == 'There have been too many login failures from your network in a short time period.  Please wait and try again later.' )
-				{
-					Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' There have been too many login failures from your network in a short time period.  Please wait and try again later.' );
-					continue;
-				}
-				
-				Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . '  Reconnecting...' );
-				$failed = 1;
+				Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' ' . $dologin['message']  );
+				continue;
 			}
 	
 			if( $dologin['success'] === true )
