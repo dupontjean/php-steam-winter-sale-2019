@@ -31,12 +31,6 @@ foreach( $bots as $json )
 {
 	$counter++;
 	
-	$c = '';
-	unset($c);
-	
-	$cookie = '';
-	unset($cookie);
-	
 	if ($counter % 101 == 0)
 	{
 		for( $sleep=150; $sleep>0; $sleep-=15 )
@@ -114,6 +108,12 @@ foreach( $bots as $json )
 	
 	do
 	{
+		$c = '';
+		unset($c);
+
+		$cookie = '';
+		unset($cookie);
+		
 		$failed = 0;
 		$store_sessionid = '';
 		$community_sessionid = '';
@@ -546,8 +546,6 @@ foreach( $bots as $json )
 			Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Nothing to trade' );
 		}
 	}
-	
-	sleep( 5 );
 }
 
 function GetCurl( )
