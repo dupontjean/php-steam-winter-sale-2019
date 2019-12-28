@@ -9,6 +9,8 @@ ini_set( 'display_errors', 0 );
 // error_reporting( E_ALL );
 // ini_set( 'display_errors', 1 );
 
+$logs = file_put_contents('logs.txt', '');
+
 include_once  __DIR__ . '/Crypt/RSA.php';
 
 $bots = glob( __DIR__ . '/config/*.json' );
@@ -778,6 +780,8 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 function Msg( $Message, $EOL = PHP_EOL, $printf = [] )
 {
 	global $DisableColors;
+	
+	$logs = file_put_contents('logs.txt', $Message.PHP_EOL , FILE_APPEND | LOCK_EX);
 
 	$Message = str_replace(
 		[
