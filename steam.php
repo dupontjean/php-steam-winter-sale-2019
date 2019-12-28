@@ -168,8 +168,18 @@ foreach( $bots as $json )
 	
 			if( $dologin['success'] !== true )
 			{
-				Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' ' . $dologin['message']  );
-				continue;
+				$failed = 1;
+
+				if( $dologin['requires_twofactor'] == 1 )
+				{
+					Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' two factor mismatch' );
+				}
+				
+				if( !empty( $dologin['message'] ) )
+				{
+					Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' ' . $dologin['message']  );
+					continue;
+				}
 			}
 	
 			if( $dologin['success'] === true )
