@@ -168,6 +168,12 @@ foreach( $bots as $json )
 	
 			if( $dologin['success'] !== true || !isset( $dologin['success'] ) )
 			{
+				if( $dologin['message'] == 'There have been too many login failures from your network in a short time period.  Please wait and try again later.' )
+				{
+					Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . ' There have been too many login failures from your network in a short time period.  Please wait and try again later.' );
+					continue;
+				}
+				
 				Msg( '{lightred}' . $counter . '/' . $bots_total . ' - ' . $botName . '  Reconnecting...' );
 				$failed = 1;
 			}
@@ -461,7 +467,7 @@ foreach( $bots as $json )
 								if( $success3 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									usleep( 600000 );
+									sleep( 1 );
 								}
 								
 								$retry3--;
@@ -507,7 +513,7 @@ foreach( $bots as $json )
 								if( $success4 == 0 )
 								{
 									Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Confirmation (retry)');
-									usleep( 600000 );
+									sleep( 1 );
 								}
 								
 								$retry4--;
@@ -518,7 +524,7 @@ foreach( $bots as $json )
 						if( $success2 == 0 )
 						{
 							Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-							usleep( 600000 );
+							sleep( 1 );
 						}
 						
 						$retry2--;
@@ -529,7 +535,7 @@ foreach( $bots as $json )
 				if( $success1 == 0 )
 				{
 					Msg( '{background-blue}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Trade (retry)');
-					usleep( 600000 );
+					sleep( 1 );
 				}
 				
 				$retry1--;
@@ -541,7 +547,7 @@ foreach( $bots as $json )
 		}
 	}
 	
-	sleep( 10 );
+	sleep( 5 );
 }
 
 function GetCurl( )
@@ -665,7 +671,7 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 			$retry--;
 			usleep( 300000 );
 		}
-		while( $retry >= 1 && $failed === 1 && sleep( 2 ) === 0 );
+		while( $retry >= 1 && $failed === 1 && sleep( 1 ) === 0 );
 
 		return $Data;
 	}
@@ -757,7 +763,7 @@ function ExecuteRequest( $URL, $Data = [], $Header = [], $Port = '', $cookies = 
 				
 				$retry--;
 			}
-			while( $retry >= 1 && $failed === 1 && usleep( 300000 ) === 0 );
+			while( $retry >= 1 && $failed === 1 && sleep( 1 ) === 0 );
 		}
 		
 		return $Data;
