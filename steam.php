@@ -408,7 +408,7 @@ foreach( $bots as $json )
 		
 		if( !empty( $trade_me ) )
 		{
-			$retry1 = 10;
+			$retry1 = 5;
 			$success1 = 0;
 
 			while( $retry1 >= 0 && $success1 == 0 )
@@ -419,7 +419,7 @@ foreach( $bots as $json )
 				{
 					$success1 = 1;
 					
-					$retry2 = 10;
+					$retry2 = 5;
 					$success2 = 0;
 
 					while( $retry2 >= 0 && $success2 == 0 )
@@ -434,7 +434,7 @@ foreach( $bots as $json )
 							
 							Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . $ret['tradeofferid']. ' trade sent...' );
 						
-							$retry3 = 10;
+							$retry3 = 5;
 							$success3 = 0;
 					
 							while( $retry3 >= 0 && $success3 == 0 )
@@ -480,7 +480,7 @@ foreach( $bots as $json )
 
 						if( isset( $cid ) && isset( $ck ) )
 						{
-							$retry4 = 10;
+							$retry4 = 5;
 							$success4 = 0;
 
 							while( $retry4 >= 0 && $success4 == 0 )
