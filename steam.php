@@ -34,15 +34,6 @@ foreach( $bots as $json )
 {
 	$counter++;
 	
-	if ($counter % 101 == 0)
-	{
-		for( $sleep=150; $sleep>0; $sleep-=15 )
-		{
-			Msg( '{background-blue}sleep '.$sleep.' seconds...' );
-			sleep(15);
-		}
-	}
-	
 	$maFile = str_replace('.json', '.maFile', $json);
 	$db = str_replace('.json', '.db', $json);
 	$botName = basename( $json, '.json' );
