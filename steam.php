@@ -370,11 +370,11 @@ foreach( $bots as $json )
 			$request = ExecuteRequest( $datas, [], [], '', false, true );
 		}
 		
-		$cards = array( );
-		$me_inventory = foo( $steamid, 0 );
-		
 		Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' Checking inventory...' );
 		
+		$cards = array( );
+		$me_inventory = foo( $steamid, 0 );
+				
 		$trade_me = array( );
 		
 		foreach( $me_inventory as $appids => $cards )
