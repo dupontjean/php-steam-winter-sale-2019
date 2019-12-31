@@ -294,6 +294,63 @@ foreach( $bots as $json )
 					// $quest = ExecuteRequest( 'https://store.steampowered.com/holidayquests/ajaxclaimitem/', array( 'sessionid' => $store_sessionid, 'type' => 1), [], '', false  );
 				// }
 			// }
+			
+			if( preg_match( '/Share a Screenshot/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://steamcommunity.com/sharedfiles/edititem/767/3/', [], [], '', false  );
+					
+					if( preg_match('/action="(.*?):(.*?)\/ugcupload"/', $quest, $ugcupload ) )
+					{
+						if( preg_match( '/type="hidden" name="token" value="(.*?)"/', $quest, $token ) )
+						{
+							if( preg_match( '/type="hidden" name="wg" value="(.*?)"/', $quest, $wg ) )
+							{
+								if( preg_match( '/type="hidden" name="wg_hmac" value="(.*?)"/', $quest, $wg_hmac ) )
+								{
+									$delimiter = '-------------'.uniqid();
+									
+									$array = array(
+										'redirect_uri' => 'https://steamcommunity.com/sharedfiles/filedetails/',
+										'wg' => $wg[1],
+										'wg_hmac' => $wg_hmac[1],
+										'appid' => 767,
+										'consumer_app_id' => 767,
+										'sessionid' => $community_sessionid,
+										'token' => $token[1],
+										'file_type' => 5,
+										'file' => base64_decode('R0lGODlhAQABAIABAP///wAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='),
+									);
+									
+									$post = '';
+									
+									foreach( $array as $name => $value )
+									{
+										if( $name == 'file' )
+										{
+											$post .= "--$delimiter\r\n";
+											$post .= "Content-Disposition: form-data; name=\"$name\"; filename=\".gif\"";
+											$post .= "\r\nContent-Type: image/gif";
+											$post .= "\r\n\r\n$value\r\n";
+										}
+										else
+										{
+											$post .= "--$delimiter\r\n";
+											$post .= "Content-Disposition: form-data; name=\"$name\"";
+											$post .= "\r\n\r\n$value\r\n";
+										}
+									}
+									
+									$post .= "--$delimiter--\r\n";
+									
+									$quest = ExecuteRequest( $ugcupload[1] . ':' . $ugcupload[2] . '/ugcupload', $post, array( 'Content-Type: multipart/form-data; boundary=' . $delimiter, 'Content-Length: ' . strlen( $post ) ), $ugcupload[2], '', false, 'https://steamcommunity.com/sharedfiles/edititem/767/3/', ''  );
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		
 		$salevote = ExecuteRequest( 'https://store.steampowered.com/steamawards', [], [], '', '', false );
