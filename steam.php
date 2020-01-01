@@ -295,6 +295,14 @@ foreach( $bots as $json )
 				// }
 			// }
 			
+			// if( preg_match( '/Use Chat Effects/', $element->textContent ) )
+			// {
+				// if( $checked->length == 0 )
+				// {
+					// $quest = ExecuteRequest( 'https://store.steampowered.com/holidayquests/ajaxclaimitem/', array( 'sessionid' => $store_sessionid, 'type' => 2), [], '', false  );
+				// }
+			// }
+			
 			if( preg_match( '/Share a Screenshot/', $element->textContent ) )
 			{
 				if( $checked->length == 0 )
