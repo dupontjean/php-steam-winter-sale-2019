@@ -297,6 +297,14 @@ foreach( $bots as $json )
 				}
 			}
 			
+			if( preg_match( '/Review Steam Awards Winners/', $element->textContent ) )
+			{
+				if( $checked->length == 0 )
+				{
+					$quest = ExecuteRequest( 'https://store.steampowered.com/steamawards/2019/', [], [], '', false  );
+				}
+			}
+			
 			// if( preg_match( '/Use Chat Stickers/', $element->textContent ) )
 			// {
 				// if( $checked->length == 0 )
