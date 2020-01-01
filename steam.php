@@ -228,6 +228,17 @@ foreach( $bots as $json )
 		
 		$holidayquests = ExecuteRequest( 'https://store.steampowered.com/holidayquests', [], [], '', '', false );
 		
+		if( preg_match( '/div class="rewards_tokens_amt">(.*?)<\/div>/', $holidayquests, $rewards_tokens_amt ) )
+		{
+		    $token = $rewards_tokens_amt[1];
+		    Msg( '{green}' . $counter . '/' . $bots_total . ' - ' . $botName . ' ' . $token . ' tokens' );
+		}
+		
+		// if( str_replace( ',', '', $token) >= 1000 )
+		// {
+		// 	$badge = ExecuteRequest( 'https://store.steampowered.com/holidaymarket/ajaxredeemtokens/', array( 'sessionid' => $store_sessionid, 'itemid' => 1002 ), [], '', '', false );
+		// }
+		
 		$dom = new DOMDocument( );
 		$dom->loadHTML( $holidayquests );
 		$finder = new DOMXpath( $dom );
